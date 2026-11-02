@@ -499,8 +499,14 @@ class GaussianTrainer:
         shN = params["shN"].detach().cpu().numpy()
 
         # Prune low-opacity hazy floaters (opacity sigmoid < 0.12)
+        # AND spiky needle artifacts (single axis > 0.10m or scale ratio > 25.0)
         act_op = 1.0 / (1.0 + np.exp(-opacities.flatten()))
-        keep = act_op >= 0.12
+        act_scales = np.exp(scales)
+        max_s = act_scales.max(axis=-1)
+        min_s = act_scales.min(axis=-1)
+        ratios = max_s / (min_s + 1e-7)
+
+        keep = (act_op >= 0.12) & (max_s <= 0.10) & (ratios <= 25.0)
         if keep.sum() > 2000:
             means = means[keep]
             scales = scales[keep]

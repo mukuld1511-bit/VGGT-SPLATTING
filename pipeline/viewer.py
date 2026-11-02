@@ -149,11 +149,18 @@ class SplatViewer:
             # Center the model around coordinate origin using robust median
             scene_center = np.median(centers, axis=0)
 
+            # Filter out elongated needle artifacts (scale ratio > 25.0 or axis > 0.10m)
+            scales_act = cloud.scales_activated
+            max_s = scales_act.max(axis=-1)
+            min_s = scales_act.min(axis=-1)
+            scale_ratios = max_s / (min_s + 1e-7)
+            non_spiky = (max_s <= 0.10) & (scale_ratios <= 25.0)
+
             # Filter out extreme distant floaters
             dists = np.linalg.norm(centers - scene_center, axis=-1)
             r_98 = float(np.percentile(dists, 98.0))
             max_r = max(r_98 * 1.5, 1.2)
-            valid = dists <= max_r
+            valid = (dists <= max_r) & non_spiky
             if np.sum(valid) > 100:
                 centers = centers[valid]
                 covariances = covariances[valid]
