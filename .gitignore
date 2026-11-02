@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & results
+data/
+results/
+benchmark_results/
+external/vggt/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/

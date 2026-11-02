@@ -1,0 +1,31 @@
+# ── Core (PyTorch installed separately via setup_dgx.sh for Blackwell compat) ──
+numpy>=1.26
+Pillow
+einops
+safetensors
+huggingface_hub
+
+# ── VGGT dependencies ─────────────────────────────────────────────────────────
+trimesh
+pycolmap==3.10.0
+pyceres==2.3
+
+# ── Gaussian Splatting ─────────────────────────────────────────────────────────
+gsplat>=1.3.0
+
+# ── Visualization ──────────────────────────────────────────────────────────────
+viser>=0.2.23
+plyfile
+open3d
+
+# ── Web UI ─────────────────────────────────────────────────────────────────────
+gradio>=5.17
+
+# ── Video Processing ──────────────────────────────────────────────────────────
+opencv-python
+tqdm
+
+# ── Utilities ──────────────────────────────────────────────────────────────────
+scipy
+matplotlib
+pydantic>=2.10
